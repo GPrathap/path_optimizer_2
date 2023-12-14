@@ -29,7 +29,7 @@ bool ValidateSmoothingnMethod(const char *flagname, const std::string &value)
 {
     return value == "TENSION" || value == "TENSION2";
 }
-bool isSmoothingMethodValid = google::RegisterFlagValidator(&FLAGS_smoothing_method, ValidateSmoothingnMethod);
+bool isSmoothingMethodValid = true;
 
 DEFINE_string(tension_solver, "OSQP", "solver used in tension smoothing method");
 
@@ -76,7 +76,7 @@ bool ValidateOptimizationMethod(const char *flagname, const std::string &value)
 {
     return value == "K" || value == "KP" || value == "KCP";
 }
-bool isOptimizationMethodValid = google::RegisterFlagValidator(&FLAGS_optimization_method, ValidateOptimizationMethod);
+bool isOptimizationMethodValid = true;
 
 DEFINE_double(K_curvature_weight, 50, "curvature weight of solver K");
 

@@ -78,8 +78,9 @@ class PlannerDemo : public rclcpp::Node{
     private:
 
         void initialization() {
-            markers = std::make_shared<ros2_viz_tools::RosVizTools>(shared_from_this(), "markers");
-            // replace timer with loop callback after initialization finished
+            rclcpp::NodeOptions node_options;
+            node_options.automatically_declare_parameters_from_overrides(true);
+            markers = std::make_shared<ros2_viz_tools::RosVizTools>("markers", node_options);
             timer_ = this->create_wall_timer(300ms, std::bind(&PlannerDemo::timer_callback, this)); 
         }
 

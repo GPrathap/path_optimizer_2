@@ -67,14 +67,39 @@ add_executable(${PROJECT_NAME}_demo src/test/demo.cpp)
 target_link_libraries(${PROJECT_NAME}_demo ${PROJECT_NAME} ${OpenCV_LIBRARIES})
 ament_target_dependencies(${PROJECT_NAME}_demo ${DEPENDENCIES})
 
+
+add_library(${PROJECT_NAME}_ilqr
+        src/path/data_structure.cpp
+        src/path/reference_line.cpp
+        src/path/spline.cpp
+        src/path/free_space.cpp
+        src/path/tool.cpp
+        src/path/free_space.cpp
+        src/path/gflags.cpp
+        src/solver/solver.cpp
+        src/solver/problem_manager.cpp
+        src/path/path_problem_manager.cpp
+        )
+
+target_link_libraries(${PROJECT_NAME}_ilqr glog gflags OsqpEigen::OsqpEigen osqp::osqp)
+ament_target_dependencies(${PROJECT_NAME}_ilqr ${DEPENDENCIES})
+
+add_executable(${PROJECT_NAME}_demo_ilqr
+        src/test/demo_ilqr.cpp
+        src/test/Map.cpp
+        src/test/reference_line_processor.cpp)
+
+target_link_libraries(${PROJECT_NAME}_demo_ilqr ${PROJECT_NAME}_ilqr ${OpenCV_LIBRARIES})
+ament_target_dependencies(${PROJECT_NAME}_demo_ilqr ${DEPENDENCIES})
+
 # install(TARGETS ${PROJECT_NAME}_demo ${PROJECT_NAME}
-install(TARGETS ${PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_ilqr
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-install(TARGETS ${PROJECT_NAME}_demo
+install(TARGETS ${PROJECT_NAME}_demo ${PROJECT_NAME}_demo_ilqr
   DESTINATION lib/${PROJECT_NAME}
 )
 
